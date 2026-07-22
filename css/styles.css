@@ -1,0 +1,507 @@
+/* ==========================================================================
+   TTM — Téllez Tires Mobile
+   Mobile-first stylesheet. No frameworks, no external fonts/icons.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Custom properties
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand colors */
+  --color-yellow: #ffc82c;
+  --color-purple: #4a1d73;
+  --color-text-dark: #1a1a1a;
+  --color-bg-light: #f7f5f0;
+  --color-white: #ffffff;
+  --color-border: #ddd6c9;
+
+  /* Layout */
+  --max-width: 75rem;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Shape */
+  --radius: 0.5rem;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  /* Header height reference, used for sticky offset at desktop widths */
+  --header-height: 4.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base typography
+   -------------------------------------------------------------------------- */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text-dark);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw + 1rem, 3rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw + 1rem, 2rem);
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout helpers
+   -------------------------------------------------------------------------- */
+section {
+  padding: var(--space-7) var(--space-4);
+}
+
+section > * {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hero p,
+#location p,
+#contact p {
+  max-width: 65ch;
+}
+
+/* --------------------------------------------------------------------------
+   5. Skip link
+   -------------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--space-4);
+  background-color: var(--color-text-dark);
+  color: var(--color-white);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  z-index: 100;
+  transition: top 0.15s ease-in-out;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   6. Header & navigation
+   -------------------------------------------------------------------------- */
+header {
+  background-color: var(--color-text-dark);
+  color: var(--color-white);
+  padding: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.site-identity {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.site-identity__mark {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-yellow);
+  letter-spacing: 0.05em;
+}
+
+.site-identity__name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Hidden by default: without JavaScript this button has no behavior,
+   so it must not appear. Stage 6 JavaScript will add ".js-enabled" to
+   reveal it only where a collapsed-menu toggle is actually needed. */
+#nav-toggle {
+  display: none;
+  background-color: transparent;
+  color: var(--color-white);
+  border: 2px solid var(--color-yellow);
+  border-radius: var(--radius);
+  padding: var(--space-2) var(--space-4);
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+#nav-toggle:hover {
+  background-color: var(--color-yellow);
+  color: var(--color-text-dark);
+}
+
+.js-enabled #nav-toggle {
+  display: inline-flex;
+}
+
+/* Navigation is visible by default. No JavaScript exists yet to toggle it,
+   so it must never be hidden here. Stage 6 JavaScript will collapse this
+   menu on small screens only after ".js-enabled" is added to the page. */
+#primary-navigation {
+  flex-basis: 100%;
+  order: 3;
+}
+
+#primary-navigation ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+}
+
+#primary-navigation a {
+  display: block;
+  color: var(--color-white);
+  text-decoration: none;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+#primary-navigation a:hover,
+#primary-navigation a:focus-visible {
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Call Now link inside navigation, styled as a distinct button */
+#primary-navigation a[href^="tel:"] {
+  background-color: var(--color-yellow);
+  color: var(--color-text-dark);
+  font-weight: 700;
+  justify-content: center;
+}
+
+#primary-navigation a[href^="tel:"]:hover,
+#primary-navigation a[href^="tel:"]:focus-visible {
+  background-color: var(--color-white);
+  text-decoration: none;
+}
+
+/* Breakpoint chosen where the full header (brand + four nav actions,
+   including the "Call Now" button) has enough width to sit on one row
+   without crowding: business identity (~15rem) + four nav items
+   (~25rem including gaps) + header padding exceeds 48em, so the header
+   would overflow or crowd at that width. 60em keeps it comfortable and
+   also aligns with the services-grid four-column breakpoint below. */
+@media (min-width: 60em) {
+  header {
+    flex-wrap: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    min-height: var(--header-height);
+  }
+
+  .js-enabled #nav-toggle {
+    display: none;
+  }
+
+  #primary-navigation {
+    flex-basis: auto;
+    order: 0;
+  }
+
+  #primary-navigation ul {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0;
+  }
+
+  #primary-navigation a {
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* Offset anchor targets so the sticky header does not cover section headings */
+  #services,
+  #location,
+  #contact {
+    scroll-margin-top: var(--header-height);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons
+   -------------------------------------------------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.button--primary {
+  background-color: var(--color-purple);
+  color: var(--color-white);
+}
+
+.button--primary:hover,
+.button--primary:focus-visible {
+  background-color: var(--color-text-dark);
+}
+
+.button--secondary {
+  background-color: transparent;
+  color: var(--color-text-dark);
+  border-color: var(--color-text-dark);
+}
+
+.button--secondary:hover,
+.button--secondary:focus-visible {
+  background-color: var(--color-text-dark);
+  color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   8. Hero
+   -------------------------------------------------------------------------- */
+#hero {
+  background-color: var(--color-yellow);
+  color: var(--color-text-dark);
+  text-align: center;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+#hero p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status-notice {
+  background-color: var(--color-white);
+  border-left: 4px solid var(--color-purple);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 30em) {
+  .hero-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. Services
+   -------------------------------------------------------------------------- */
+#services {
+  background-color: var(--color-white);
+}
+
+.service-gallery {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+@media (min-width: 37.5em) {
+  .service-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 60em) {
+  .service-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.service-visual {
+  margin: 0;
+}
+
+.placeholder-visual {
+  aspect-ratio: 4 / 3;
+  background-color: var(--color-bg-light);
+  border: 1px dashed var(--color-purple);
+  border-radius: var(--radius);
+}
+
+.service-visual figcaption {
+  margin-top: var(--space-2);
+  font-weight: 600;
+  text-align: center;
+}
+
+.service-list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-list li {
+  padding-left: var(--space-5);
+  position: relative;
+}
+
+.service-list li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  color: var(--color-purple);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   10. Location & Contact
+   -------------------------------------------------------------------------- */
+#location {
+  background-color: var(--color-bg-light);
+  text-align: center;
+}
+
+#contact {
+  background-color: var(--color-white);
+  text-align: center;
+}
+
+#contact a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-purple);
+  color: var(--color-white);
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+#contact a:hover,
+#contact a:focus-visible {
+  background-color: var(--color-text-dark);
+}
+
+/* --------------------------------------------------------------------------
+   11. Footer
+   -------------------------------------------------------------------------- */
+footer {
+  background-color: var(--color-text-dark);
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--space-5) var(--space-4);
+  font-size: 0.875rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   12. Focus states
+   -------------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-purple);
+  outline-offset: 2px;
+}
+
+header a:focus-visible,
+header button:focus-visible {
+  outline-color: var(--color-yellow);
+}
+
+/* --------------------------------------------------------------------------
+   13. Reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
