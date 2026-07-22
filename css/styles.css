@@ -13,13 +13,11 @@
   --color-text-dark: #1a1a1a;
   --color-bg-light: #f7f5f0;
   --color-white: #ffffff;
-  --color-border: #ddd6c9;
 
   /* Layout */
   --max-width: 75rem;
 
   /* Spacing scale */
-  --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -211,7 +209,6 @@ header {
 }
 
 #primary-navigation a {
-  display: block;
   color: var(--color-white);
   text-decoration: none;
   padding: var(--space-3);
@@ -275,11 +272,13 @@ header {
     padding: var(--space-2) var(--space-4);
   }
 
-  /* Offset anchor targets so the sticky header does not cover section headings */
+  /* Offset anchor targets so the sticky header does not cover section headings.
+     Adds a small buffer above --header-height since the header uses min-height
+     and can grow taller than that reference value (e.g. under text zoom). */
   #services,
   #location,
   #contact {
-    scroll-margin-top: var(--header-height);
+    scroll-margin-top: calc(var(--header-height) + var(--space-4));
   }
 }
 
@@ -493,10 +492,6 @@ header button:focus-visible {
    13. Reduced motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
