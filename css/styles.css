@@ -8,10 +8,10 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Brand colors */
-  --color-yellow: #ffc82c;
+  --color-yellow: #eee93e;
   --color-purple: #4a1d73;
-  --color-text-dark: #1a1a1a;
-  --color-bg-light: #f7f5f0;
+  --color-text-dark: #272222;
+  --color-bg-light: #f7e9c3;
   --color-white: #ffffff;
 
   /* Layout */
@@ -155,16 +155,14 @@ header {
   color: var(--color-white);
 }
 
-.site-identity__mark {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--color-yellow);
-  letter-spacing: 0.05em;
+.site-identity__logo {
+  height: 2.5rem;
+  width: auto;
 }
 
 .site-identity__name {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
 /* Hidden by default: without JavaScript this button has no behavior,
