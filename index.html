@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TTM — Téllez Tires Mobile | Gilroy, CA</title>
   <meta name="description" content="TTM — Téllez Tires Mobile offers tire sales, repair, and installation services in Gilroy, California. Call today for current service availability.">
+  <link rel="alternate" hreflang="es" href="es/index.html">
+  <link rel="alternate" hreflang="en" href="index.html">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/main.js" defer></script>
 </head>
@@ -23,13 +25,15 @@
   </a>
   <!-- Temporary text-based identity. Replace with the approved logo image (assets/images/ttm-logo.png) once finalized. Do not approximate the official logo design in HTML or CSS. -->
 
-  <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
+  <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" data-label-open="Close Menu" data-label-closed="Menu">Menu</button>
 
   <nav id="primary-navigation" aria-label="Primary">
     <ul>
+      <li><a href="#top">Home</a></li>
       <li><a href="#services">Services</a></li>
-      <li><a href="#location">Location</a></li>
+      <li><a href="#our-work">Our Work</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="es/index.html" lang="es" hreflang="es">Español</a></li>
       <li><a href="tel:+14088412040">Call Now</a></li>
     </ul>
   </nav>
@@ -50,54 +54,57 @@
   <section id="services" aria-labelledby="services-heading">
     <h2 id="services-heading">Our Services</h2>
 
-    <!-- Development placeholders below. Replace each placeholder-visual div with an approved img element once real photographs are provided: assets/images/service-vehicle.jpg, assets/images/tire-inventory.jpg, assets/images/tire-service.jpg, assets/images/gilroy-location.jpg. Remove all placeholder markup before production deployment. -->
-    <ul class="service-gallery">
-      <li>
-        <figure class="service-visual">
-          <div class="placeholder-visual" aria-hidden="true"></div>
-          <figcaption>Service Vehicle</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure class="service-visual">
-          <div class="placeholder-visual" aria-hidden="true"></div>
-          <figcaption>Tire Selection</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure class="service-visual">
-          <div class="placeholder-visual" aria-hidden="true"></div>
-          <figcaption>Tire Service</figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure class="service-visual">
-          <div class="placeholder-visual" aria-hidden="true"></div>
-          <figcaption>Gilroy Location</figcaption>
-        </figure>
-      </li>
-    </ul>
-
     <!-- Final service wording requires owner approval before this list is considered final. -->
-    <ul class="service-list">
-      <li>New and used tires</li>
-      <li>Flat tire repair</li>
-      <li>Tire installation</li>
-      <li>Brake replacement</li>
-      <li>Shocks and struts</li>
-      <li>Suspension service</li>
-      <li>Wheel balancing</li>
+    <ul class="tire-grid">
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">New and used tires</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Flat tire repair</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Tire installation</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Brake replacement</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Shocks and struts</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Suspension service</span></span>
+      </li>
+      <li class="tire">
+        <span class="tire__hub"><span class="tire__label">Wheel balancing</span></span>
+      </li>
     </ul>
   </section>
 
-  <section id="location" aria-labelledby="location-heading">
-    <h2 id="location-heading">Location</h2>
-    <p>Behind Furniture Revolution on Monterey Road in Gilroy, California, across from Super Taqueria.</p>
+  <section id="our-work" aria-labelledby="our-work-heading">
+    <h2 id="our-work-heading">Our Work</h2>
+    <!-- Gallery holds up to 16 client photos; only real, owner-approved photos are added.
+         Only one photo is available so far. More will be added as the owner supplies them. -->
+    <ul class="work-gallery">
+      <li>
+        <img
+            src="assets/images/work-01.jpg"
+            alt="Tire service work performed by TTM — Téllez Tires Mobile"
+            loading="lazy"
+        >
+      </li>
+    </ul>
   </section>
 
   <section id="contact" aria-labelledby="contact-heading">
     <h2 id="contact-heading">Contact</h2>
-    <p><a href="tel:+14088412040">(408) 841-2040</a></p>
+    <div class="contact-card">
+      <p><a href="tel:+14088412040">(408) 841-2040</a></p>
+      <p><a href="mailto:enrique408delgadillo@gmail.com">enrique408delgadillo@gmail.com</a></p>
+      <address>
+        6980 Monterey Rd<br>
+        Gilroy, CA 95020
+      </address>
+    </div>
     <!-- Verified social media profile URLs (TikTok, Facebook, Instagram) are pending and will be added once confirmed by the business owner. -->
   </section>
 

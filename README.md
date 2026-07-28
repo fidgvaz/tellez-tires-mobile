@@ -29,7 +29,9 @@ libraries are used. The site is fully static and requires no backend.
 - Semantic single-page HTML structure
 - Mobile-first, fully responsive design
 - Yellow and purple brand styling with strong color contrast
-- Click-to-call telephone links
+- Click-to-call telephone links and a click-to-email contact link
+- CSS-drawn, tire-shaped service elements (no images required)
+- Responsive Our Work photo gallery
 - Accessible skip-to-content link
 - Keyboard-visible focus states throughout
 - Accessible mobile navigation (works with and without JavaScript)
@@ -86,38 +88,87 @@ The site is fully usable with JavaScript disabled:
 ```text
 ttm-tellez-tires-mobile/
 ├── index.html
+├── es/
+│   └── index.html
 ├── README.md
 ├── .gitignore
+├── assets/
+│   └── images/
+│       ├── ttm-logo.png
+│       ├── background.jpeg   (pending — not yet supplied)
+│       └── work-01.jpg       (more added as the owner supplies photos)
 ├── css/
 │   └── styles.css
 └── js/
     └── main.js
 ```
 
-- **index.html** — Single page containing all site sections
+- **index.html** — English homepage, containing all site sections
+- **es/index.html** — Spanish homepage; a hand-mirrored translation of
+  `index.html` with the same structure, ids, and classes (see "Bilingual
+  Site" below)
 - **README.md** — This file
 - **.gitignore** — Files and folders excluded from version control
-- **css/styles.css** — All site styling (mobile-first, responsive)
+- **assets/images/** — Site images (logo, page background, Our Work
+  gallery photos) — shared by both language pages
+- **css/styles.css** — All site styling (mobile-first, responsive) —
+  shared by both language pages
 - **js/main.js** — Vanilla JS behaviors (mobile nav toggle, footer year)
+  — shared by both language pages
+
+## Bilingual Site
+
+The site has two static pages, not one: `index.html` (English, `lang="en"`)
+and `es/index.html` (Spanish, `lang="es"`). Both are hand-maintained,
+complete HTML documents — there is no build step, templating, or
+server-side logic generating one from the other.
+
+- **Shared, not duplicated**: both pages link to the exact same
+  `css/styles.css`, `js/main.js`, and `assets/images/` files. `es/index.html`
+  reaches them via `../` (e.g. `../css/styles.css`, `../assets/images/ttm-logo.png`)
+  since it lives one directory deeper.
+- **Ids and classes are identical (in English) on both pages** —
+  `#hero`, `#services`, `#our-work`, `#contact`, `.tire`, `.work-gallery`,
+  etc. — because both pages depend on the same CSS/JS targeting those
+  selectors. Only visible text, `lang`, `alt` text, and a few specific
+  attributes (`aria-label`, page title, meta description) differ.
+- **Language switcher**: a plain link in the nav on each page — "Español"
+  on the English page (→ `es/index.html`), "English" on the Spanish page
+  (→ `../index.html`). It's a normal anchor with no JavaScript involved,
+  so it works identically with JavaScript on or off.
+- **Shared JS, per-page labels**: the mobile menu toggle button's text
+  ("Menu"/"Close Menu" vs. "Menú"/"Cerrar menú") comes from
+  `data-label-open` / `data-label-closed` attributes set on the `<button>`
+  in each page's HTML, read by the one shared `js/main.js`. This keeps the
+  script itself identical across both pages while still showing the
+  correct language.
+- **Not translated** (same on both pages): the business name
+  "TTM — Téllez Tires Mobile", the phone number, the email address, the
+  street address, and all image filenames.
+- **Maintenance**: any future content change (new service, new gallery
+  photo, edited wording) must be applied to **both** `index.html` and
+  `es/index.html` by hand — there's no single source of truth that
+  generates both.
 
 Folders and files are added incrementally as each is actually needed; this
-repository does not contain empty placeholder folders. An `assets/images/`
-folder does not exist yet — see "Reserved Final Image Filenames" below.
+repository does not contain empty placeholder folders — see "Image
+Filenames" below for what currently exists in `assets/images/`.
 
-## Reserved Final Image Filenames
+## Image Filenames
 
-The following filenames are reserved for future, owner-approved production
-images. They do not yet exist in this repository, and no real business
-photographs have been added:
+- `assets/images/ttm-logo.png` — header logo (in place)
+- `assets/images/background.jpeg` — full-page background photo; **reserved,
+  not yet supplied by the owner**. The CSS rule referencing it is already
+  in place and will simply have no visible effect until the file exists.
+- `assets/images/work-01.jpg`, `work-02.jpg`, … `work-16.jpg` — Our Work
+  gallery photos, sequentially numbered. Only real, owner-approved photos
+  are ever added; slots are not pre-filled with placeholders. Currently
+  only `work-01.jpg` exists.
 
-- `assets/images/ttm-logo.png`
-- `assets/images/service-vehicle.jpg`
-- `assets/images/tire-inventory.jpg`
-- `assets/images/tire-service.jpg`
-- `assets/images/gilroy-location.jpg`
-
-Until these real images are provided and approved, the HTML/CSS use styled
-visual placeholder elements rather than broken image references.
+The four filenames previously reserved for service-section photos
+(`service-vehicle.jpg`, `tire-inventory.jpg`, `tire-service.jpg`,
+`gilroy-location.jpg`) are no longer needed — the Services section now
+uses CSS-drawn tire shapes instead of photographs.
 
 ## Running Locally
 
@@ -143,15 +194,19 @@ once deployed, so it is the preferred method for testing.
 
 ## Testing the Site
 
-After starting the local server and opening `http://localhost:8000`,
-manually verify:
+After starting the local server, repeat every check below on **both**
+`http://localhost:8000/` (English) and `http://localhost:8000/es/`
+(Spanish) — they are separate pages and must each be verified:
 
-- **Mobile widths** (~320–599px): single-column layout, mobile menu toggle
-  visible and functional, no horizontal scrolling
-- **Tablet widths** (~600–959px): two-column services grid, layout remains
-  comfortable with no crowding
-- **Desktop widths** (960px+): full horizontal navigation, four-column
-  services grid, sticky header
+- **Mobile widths** (~320–599px): single-column tire grid and Our Work
+  gallery, mobile menu toggle visible and functional, tire tread pattern
+  falls back to a flat ring below ~384px, no horizontal scrolling
+- **Tablet widths** (~600–959px): two-column tire grid and gallery, layout
+  remains comfortable with no crowding
+- **Desktop widths** (960px+): full horizontal navigation, four-column tire
+  grid, three-column Our Work gallery, sticky header
+- **Tire legibility**: at every width, confirm each service name stays
+  fully readable inside its tire and never overflows the hub
 - **Keyboard navigation**: press Tab repeatedly from the top of the page;
   confirm the skip link appears first, every interactive element shows a
   visible focus outline, and tab order follows the visual layout
@@ -165,10 +220,26 @@ manually verify:
 - **Telephone links**: confirm the phone number is clickable in the header
   nav, hero, and contact section, and that all three use the same
   `tel:+14088412040` link
+- **Email link**: confirm the Contact section email opens the default mail
+  client via `mailto:enrique408delgadillo@gmail.com`
+- **Contact readability**: confirm the phone, email, and address remain
+  legible on the contact card at every width, especially once
+  `background.jpeg` is added behind it
 - **Current-year behavior**: with JavaScript enabled, confirm the footer
   year matches the current year
 - **Horizontal scrolling**: at every width tested above, confirm the page
   never scrolls horizontally
+- **Language switcher**: click "Español" on the English page, confirm it
+  lands on `es/index.html`; click "English" there, confirm it returns to
+  `index.html`; repeat with JavaScript disabled to confirm it still works
+- **No broken assets on the Spanish page**: on `es/index.html`, confirm
+  the stylesheet, script, and every image load correctly (no 404s) via
+  their `../`-prefixed relative paths
+- **`lang` attribute**: view-source on each page and confirm
+  `<html lang="en">` on `index.html` and `<html lang="es">` on
+  `es/index.html`
+- **Menu button translation**: on `es/index.html`, confirm the mobile menu
+  button reads "Menú" / "Cerrar menú" (not the English strings)
 
 ## Confirmed Business Information
 
@@ -177,23 +248,25 @@ The following facts have been confirmed and are safe to treat as final:
 - Business name: **TTM — Téllez Tires Mobile**
 - Phone: **(408) 841-2040**
 - Click-to-call link: **tel:+14088412040**
+- Email: **enrique408delgadillo@gmail.com** (mailto: link in Contact section)
+- Address: **6980 Monterey Rd, Gilroy, CA 95020**
 - Current status wording: *"Currently serving customers at our Gilroy
   location. Call for current service availability."*
-- Location/landmark wording: *"Behind Furniture Revolution on Monterey Road
-  in Gilroy, California, across from Super Taqueria."*
 
 ## Pending Business Information
 
 The following remain pending owner input and are intentionally omitted or
 marked as placeholders in the codebase:
 
-- Exact verified street address or an approved map pin
+- An approved map embed or directions link (exact street address is now
+  confirmed — see "Confirmed Business Information" above)
 - Business hours
 - Social media profile URLs (TikTok, Facebook, Instagram)
 - Final approved logo asset (a reference photo has been provided; the
   production-quality asset is not ready)
-- Real business photographs (service vehicle, tire inventory, tire service,
-  Gilroy location)
+- `assets/images/background.jpeg`, the full-page background photo
+- Additional Our Work gallery photos — only 1 of a 12–16 photo target
+  currently exists (`work-01.jpg`)
 - Final wording approval for the services list
 - A decision on future mobile-service messaging, if that service resumes
 - Final developer credit wording
@@ -203,18 +276,21 @@ marked as placeholders in the codebase:
 As the items above are confirmed, they should replace the corresponding
 placeholder:
 
-- **Images** — replace the styled placeholder elements in `index.html` /
-  `css/styles.css` with `<img>` tags pointing to the reserved filenames,
-  once approved image files are added to `assets/images/`.
-- **Business hours, social links, address** — add once confirmed by the
-  owner.
+- **Background photo** — `background.jpeg` will render automatically once
+  the file is added to `assets/images/`; the CSS rule referencing it is
+  already in place.
+- **Our Work gallery photos** — add each new owner-approved photo as
+  `work-0N.jpg` in `assets/images/` and a matching `<li><img></li>` in
+  `index.html`, up to the ~12–16 photo target.
+- **Business hours, social links** — add once confirmed by the owner.
 - **Service list wording** — update once the owner approves final wording.
 
 ## Current Limitations
 
-- No real business photographs or final logo asset have been added; all
-  visual placeholders are CSS-based development placeholders only
-- Exact street address is not yet confirmed
+- The page background photo (`background.jpeg`) and most Our Work gallery
+  photos have not been supplied yet; only 1 of the ~12–16 target gallery
+  photos currently exists
+- No final logo asset has been added
 - Business hours are not yet published
 - Social media profile links are not yet available
 - Several services are pending final wording approval from the owner
@@ -267,10 +343,12 @@ Before this site goes live, complete the following:
 - [ ] Add verified social media links
 - [ ] Remove development-only HTML comments if no longer useful
 - [ ] Verify final developer credit wording
-- [ ] Test on mobile, tablet, and desktop widths
-- [ ] Test full keyboard accessibility
-- [ ] Test the site with JavaScript disabled
-- [ ] Validate HTML (e.g. via the W3C validator)
+- [ ] Test on mobile, tablet, and desktop widths (both `index.html` and
+      `es/index.html`)
+- [ ] Test full keyboard accessibility (both language pages)
+- [ ] Test the site with JavaScript disabled (both language pages)
+- [ ] Have a native Spanish speaker review `es/index.html` wording
+- [ ] Validate HTML (e.g. via the W3C validator) — both language pages
 - [ ] Verify there are no broken links
 - [ ] Confirm a favicon decision (add one or intentionally omit)
 - [ ] Confirm final page title and meta description wording

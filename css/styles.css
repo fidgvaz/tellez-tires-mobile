@@ -66,7 +66,18 @@ ol {
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--color-text-dark);
+  /* Fallback color shows until background.jpeg is supplied, and behind
+     any part of the image that doesn't fully cover the page. Sections
+     with their own opaque background (header, hero, our-work, footer)
+     sit on top of this and are unaffected; #services and #contact are
+     transparent so this shows through them. background-attachment is
+     intentionally left at its default ("scroll") rather than "fixed" —
+     "fixed" is known to be janky/inconsistent on iOS Safari. */
   background-color: var(--color-white);
+  background-image: url("../assets/images/background.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -109,7 +120,6 @@ section > * {
 }
 
 #hero p,
-#location p,
 #contact p {
   max-width: 65ch;
 }
@@ -274,7 +284,7 @@ header {
      Adds a small buffer above --header-height since the header uses min-height
      and can grow taller than that reference value (e.g. under text zoom). */
   #services,
-  #location,
+  #our-work,
   #contact {
     scroll-margin-top: calc(var(--header-height) + var(--space-4));
   }
@@ -360,82 +370,143 @@ header {
 }
 
 /* --------------------------------------------------------------------------
-   9. Services
+   9. Services — tire-shaped elements
    -------------------------------------------------------------------------- */
 #services {
-  background-color: var(--color-white);
+  background-color: transparent;
 }
 
-.service-gallery {
+/* Same breakpoint pattern as the rest of the site: 1 -> 2 -> 4 columns. */
+.tire-grid {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-5);
-  margin-bottom: var(--space-7);
+  gap: var(--space-6);
 }
 
 @media (min-width: 37.5em) {
-  .service-gallery {
+  .tire-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 60em) {
-  .service-gallery {
+  .tire-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.service-visual {
-  margin: 0;
+/* Outer "tire": a circle with a tread pattern built from a conic gradient,
+   so no images or brand-specific tread/logo artwork are needed. Sized
+   fluidly (percentage width + aspect-ratio) so it never distorts and
+   scales with its grid cell rather than using a fixed pixel size. */
+.tire {
+  width: 100%;
+  max-width: 11rem;
+  min-width: 6.5rem;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  padding: 12%;
+  background: repeating-conic-gradient(
+    var(--color-text-dark) 0deg 8deg,
+    #000 8deg 16deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
 }
 
-.placeholder-visual {
-  aspect-ratio: 4 / 3;
-  background-color: var(--color-bg-light);
-  border: 1px dashed var(--color-purple);
-  border-radius: var(--radius);
+/* Inner "hub": solid accent circle that holds the actual service name. */
+.tire__hub {
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  background-color: var(--color-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
 }
 
-.service-visual figcaption {
-  margin-top: var(--space-2);
-  font-weight: 600;
-  text-align: center;
-}
-
-.service-list {
-  list-style: none;
-  display: grid;
-  gap: var(--space-3);
-  max-width: 40rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.service-list li {
-  padding-left: var(--space-5);
-  position: relative;
-}
-
-.service-list li::before {
-  content: "\2013";
-  position: absolute;
-  left: 0;
-  color: var(--color-purple);
+.tire__label {
+  font-size: clamp(0.7rem, 2.5vw, 0.95rem);
   font-weight: 700;
+  color: var(--color-text-dark);
+  text-align: center;
+  line-height: 1.15;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Mobile fallback: below this width the tread pattern reads as noise
+   rather than detail, so it's dropped in favor of a flat ring. The
+   circular "tire" identity and hub/label stay intact either way. */
+@media (max-width: 24em) {
+  .tire {
+    background: var(--color-text-dark);
+  }
 }
 
 /* --------------------------------------------------------------------------
-   10. Location & Contact
+   10. Our Work & Contact
    -------------------------------------------------------------------------- */
-#location {
+#our-work {
   background-color: var(--color-bg-light);
   text-align: center;
 }
 
+.work-gallery {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 37.5em) {
+  .work-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 60em) {
+  .work-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Fixed aspect ratio + cover crop keeps mixed portrait/landscape source
+   photos (some client photos are tall phone photos) presenting as
+   consistent, non-distorted grid tiles. */
+.work-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
 #contact {
-  background-color: var(--color-white);
+  background-color: transparent;
   text-align: center;
+}
+
+/* Semi-opaque card so contact text stays readable once the page
+   background photo is in place behind this section. */
+.contact-card {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius);
+  padding: var(--space-6) var(--space-4);
+  box-shadow: var(--shadow);
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.contact-card address {
+  font-style: normal;
+  line-height: 1.5;
+  margin-top: var(--space-3);
 }
 
 #contact a {

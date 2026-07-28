@@ -15,9 +15,15 @@
 
     var desktopQuery = window.matchMedia('(min-width: 60em)');
 
+    // Labels come from data attributes so this file stays shared,
+    // unchanged, across language versions of the site; these English
+    // strings are only the fallback if the attributes are absent.
+    var openLabel = toggle.dataset.labelOpen || 'Close Menu';
+    var closedLabel = toggle.dataset.labelClosed || 'Menu';
+
     function setNavOpen(isOpen) {
       toggle.setAttribute('aria-expanded', String(isOpen));
-      toggle.textContent = isOpen ? 'Close Menu' : 'Menu';
+      toggle.textContent = isOpen ? openLabel : closedLabel;
       // Native "hidden" attribute avoids needing any CSS changes for this menu.
       nav.hidden = !isOpen;
     }
