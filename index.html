@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/main.js" defer></script>
 </head>
-<body id="top">
+<body>
 
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
 <header>
-  <a href="#top" class="site-identity">
+  <a href="index.html" class="site-identity">
     <img
         src="assets/images/ttm-logo.png"
         alt="TTM Téllez Tires Mobile logo"
@@ -23,16 +23,15 @@
     >
     <span class="site-identity__name">Téllez Tires Mobile</span>
   </a>
-  <!-- Temporary text-based identity. Replace with the approved logo image (assets/images/ttm-logo.png) once finalized. Do not approximate the official logo design in HTML or CSS. -->
 
   <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" data-label-open="Close Menu" data-label-closed="Menu">Menu</button>
 
   <nav id="primary-navigation" aria-label="Primary">
     <ul>
-      <li><a href="#top">Home</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#our-work">Our Work</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html" aria-current="page">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li><a href="es/index.html" lang="es" hreflang="es">Español</a></li>
       <li><a href="tel:+14088412040">Call Now</a></li>
     </ul>
@@ -47,65 +46,23 @@
     <p class="status-notice">Currently serving customers at our Gilroy location. Call for current service availability.</p>
     <div class="hero-actions">
       <a href="tel:+14088412040" class="button button--primary">Call Now</a>
-      <a href="#services" class="button button--secondary">View Services</a>
+      <a href="services.html" class="button button--secondary">View Services</a>
     </div>
   </section>
 
-  <section id="services" aria-labelledby="services-heading">
-    <h2 id="services-heading">Our Services</h2>
-
-    <!-- Final service wording requires owner approval before this list is considered final. -->
-    <ul class="tire-grid">
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">New and used tires</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Flat tire repair</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Tire installation</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Brake replacement</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Shocks and struts</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Suspension service</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Wheel balancing</span></span>
-      </li>
-    </ul>
-  </section>
-
-  <section id="our-work" aria-labelledby="our-work-heading">
-    <h2 id="our-work-heading">Our Work</h2>
-    <!-- Gallery holds up to 16 client photos; only real, owner-approved photos are added.
-         Only one photo is available so far. More will be added as the owner supplies them. -->
-    <ul class="work-gallery">
-      <li>
-        <img
-            src="assets/images/work-01.jpg"
-            alt="Tire service work performed by TTM — Téllez Tires Mobile"
-            loading="lazy"
-        >
-      </li>
-    </ul>
-  </section>
-
-  <section id="contact" aria-labelledby="contact-heading">
-    <h2 id="contact-heading">Contact</h2>
-    <div class="contact-card">
-      <p><a href="tel:+14088412040">(408) 841-2040</a></p>
-      <p><a href="mailto:enrique408delgadillo@gmail.com">enrique408delgadillo@gmail.com</a></p>
-      <address>
-        6980 Monterey Rd<br>
-        Gilroy, CA 95020
-      </address>
+  <section class="vehicle-photo">
+    <div class="vehicle-photo__frame">
+      <img
+          src="assets/images/background.jpeg"
+          alt="TTM — Téllez Tires Mobile service vehicle parked with tires stacked beside it"
+          class="vehicle-photo__img"
+      >
+      <div class="vehicle-photo__overlay" aria-labelledby="about-heading">
+        <h2 id="about-heading">About TTM</h2>
+        <p>At Téllez Tires Mobile, we proudly serve the Gilroy community with dependable tire sales, installation, and repair services. Whether you drive a car, pickup truck, or work vehicle, our goal is to help keep you safely on the road.</p>
+        <p>We believe good service means more than repairing or replacing tires. We treat every customer with respect, listen carefully to their needs, and work hard to provide results they can feel confident about. We want every customer to leave satisfied and feel comfortable returning whenever they need tire service again.</p>
+      </div>
     </div>
-    <!-- Verified social media profile URLs (TikTok, Facebook, Instagram) are pending and will be added once confirmed by the business owner. -->
   </section>
 
 </main>
@@ -113,7 +70,7 @@
 <footer>
   <p>&copy; <span id="current-year">2026</span> TTM — Téllez Tires Mobile</p>
   <!-- The current-year span is updated dynamically by js/main.js. The static value above is a fallback for when JavaScript is unavailable. -->
-  <!-- Developer credit will be added after the final wording is approved. -->
+  <p class="footer-credit">Website designed and developed by <a href="mailto:fidgvaz@gmail.com">Fidel G. Vázquez</a></p>
 </footer>
 
 </body>

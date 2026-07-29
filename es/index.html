@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../js/main.js" defer></script>
 </head>
-<body id="top">
+<body>
 
 <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
 <header>
-  <a href="#top" class="site-identity">
+  <a href="index.html" class="site-identity">
     <img
         src="../assets/images/ttm-logo.png"
         alt="Logotipo de TTM Téllez Tires Mobile"
@@ -23,16 +23,15 @@
     >
     <span class="site-identity__name">Téllez Tires Mobile</span>
   </a>
-  <!-- Temporary text-based identity. Replace with the approved logo image (assets/images/ttm-logo.png) once finalized. Do not approximate the official logo design in HTML or CSS. -->
 
   <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" data-label-open="Cerrar menú" data-label-closed="Menú">Menú</button>
 
   <nav id="primary-navigation" aria-label="Principal">
     <ul>
-      <li><a href="#top">Inicio</a></li>
-      <li><a href="#services">Servicios</a></li>
-      <li><a href="#our-work">Nuestro Trabajo</a></li>
-      <li><a href="#contact">Contacto</a></li>
+      <li><a href="index.html" aria-current="page">Inicio</a></li>
+      <li><a href="services.html">Servicios</a></li>
+      <li><a href="our-work.html">Nuestro Trabajo</a></li>
+      <li><a href="contact.html">Contacto</a></li>
       <li><a href="../index.html" lang="en" hreflang="en">English</a></li>
       <li><a href="tel:+14088412040">Llamar ahora</a></li>
     </ul>
@@ -47,65 +46,23 @@
     <p class="status-notice">Actualmente atendemos a clientes en nuestra ubicación de Gilroy. Llame para conocer la disponibilidad actual del servicio.</p>
     <div class="hero-actions">
       <a href="tel:+14088412040" class="button button--primary">Llamar ahora</a>
-      <a href="#services" class="button button--secondary">Ver Servicios</a>
+      <a href="services.html" class="button button--secondary">Ver Servicios</a>
     </div>
   </section>
 
-  <section id="services" aria-labelledby="services-heading">
-    <h2 id="services-heading">Nuestros Servicios</h2>
-
-    <!-- Final service wording requires owner approval before this list is considered final. -->
-    <ul class="tire-grid">
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Llantas nuevas y usadas</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Reparación de llantas ponchadas</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Instalación de llantas</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Reemplazo de frenos</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Amortiguadores</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Servicio de suspensión</span></span>
-      </li>
-      <li class="tire">
-        <span class="tire__hub"><span class="tire__label">Balanceo de llantas</span></span>
-      </li>
-    </ul>
-  </section>
-
-  <section id="our-work" aria-labelledby="our-work-heading">
-    <h2 id="our-work-heading">Nuestro Trabajo</h2>
-    <!-- Gallery holds up to 16 client photos; only real, owner-approved photos are added.
-         Only one photo is available so far. More will be added as the owner supplies them. -->
-    <ul class="work-gallery">
-      <li>
-        <img
-            src="../assets/images/work-01.jpg"
-            alt="Trabajo de servicio de llantas realizado por TTM — Téllez Tires Mobile"
-            loading="lazy"
-        >
-      </li>
-    </ul>
-  </section>
-
-  <section id="contact" aria-labelledby="contact-heading">
-    <h2 id="contact-heading">Contacto</h2>
-    <div class="contact-card">
-      <p><a href="tel:+14088412040">(408) 841-2040</a></p>
-      <p><a href="mailto:enrique408delgadillo@gmail.com">enrique408delgadillo@gmail.com</a></p>
-      <address>
-        6980 Monterey Rd<br>
-        Gilroy, CA 95020
-      </address>
+  <section class="vehicle-photo">
+    <div class="vehicle-photo__frame">
+      <img
+          src="../assets/images/background.jpeg"
+          alt="Camión de servicio de TTM — Téllez Tires Mobile estacionado con llantas apiladas al lado"
+          class="vehicle-photo__img"
+      >
+      <div class="vehicle-photo__overlay" aria-labelledby="about-heading">
+        <h2 id="about-heading">Acerca de TTM</h2>
+        <p>En Téllez Tires Mobile, atendemos con orgullo a la comunidad de Gilroy ofreciendo servicios confiables de venta, instalación y reparación de llantas. Ya sea que conduzca un automóvil, una camioneta o un vehículo de trabajo, nuestro objetivo es ayudarle a mantenerse seguro en el camino.</p>
+        <p>Para nosotros, un buen servicio significa mucho más que reparar o reemplazar llantas. Tratamos a cada cliente con respeto, escuchamos sus necesidades y trabajamos para ofrecer resultados en los que pueda confiar. Queremos que cada cliente se vaya satisfecho y se sienta cómodo regresando cuando vuelva a necesitar nuestros servicios.</p>
+      </div>
     </div>
-    <!-- Verified social media profile URLs (TikTok, Facebook, Instagram) are pending and will be added once confirmed by the business owner. -->
   </section>
 
 </main>
@@ -113,7 +70,7 @@
 <footer>
   <p>&copy; <span id="current-year">2026</span> TTM — Téllez Tires Mobile</p>
   <!-- The current-year span is updated dynamically by js/main.js. The static value above is a fallback for when JavaScript is unavailable. -->
-  <!-- Developer credit will be added after the final wording is approved. -->
+  <p class="footer-credit">Sitio web diseñado y desarrollado por <a href="mailto:fidgvaz@gmail.com">Fidel G. Vázquez</a></p>
 </footer>
 
 </body>

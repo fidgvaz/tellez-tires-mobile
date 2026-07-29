@@ -66,20 +66,18 @@ ol {
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--color-text-dark);
-  /* Fallback color shows until background.jpeg is supplied, and behind
-     any part of the image that doesn't fully cover the page. Sections
-     with their own opaque background (header, hero, our-work, footer)
-     sit on top of this and are unaffected; #services and #contact are
-     transparent so this shows through them. background-attachment is
-     intentionally left at its default ("scroll") rather than "fixed" —
-     "fixed" is known to be janky/inconsistent on iOS Safari. */
   background-color: var(--color-white);
-  background-image: url("../assets/images/background.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   line-height: 1.6;
   font-size: 1rem;
+}
+
+/* Purple page background, used on the Services and Our Work pages only.
+   Headings and text inherit the white color automatically; .tire__label
+   sets the same white explicitly (see section 9) since it needs to stay
+   readable regardless of where it's nested. */
+body.page--purple {
+  background-color: var(--color-purple);
+  color: var(--color-white);
 }
 
 h1,
@@ -279,15 +277,6 @@ header {
   #primary-navigation a {
     padding: var(--space-2) var(--space-4);
   }
-
-  /* Offset anchor targets so the sticky header does not cover section headings.
-     Adds a small buffer above --header-height since the header uses min-height
-     and can grow taller than that reference value (e.g. under text zoom). */
-  #services,
-  #our-work,
-  #contact {
-    scroll-margin-top: calc(var(--header-height) + var(--space-4));
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -337,13 +326,21 @@ header {
   background-color: var(--color-yellow);
   color: var(--color-text-dark);
   text-align: center;
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
+  padding-top: clamp(5rem, 2rem + 8vw, 8rem);
+  padding-bottom: clamp(5rem, 2rem + 8vw, 8rem);
 }
 
 #hero p {
   margin-left: auto;
   margin-right: auto;
+}
+
+#hero p:not(.status-notice) {
+  font-size: 1.25rem;
+}
+
+#hero h1 {
+  margin-bottom: var(--space-6);
 }
 
 .status-notice {
@@ -352,14 +349,16 @@ header {
   border-radius: var(--radius);
   padding: var(--space-4);
   font-weight: 600;
+  font-size: 1.1rem;
   box-shadow: var(--shadow);
+  margin-top: var(--space-5);
 }
 
 .hero-actions {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  margin-top: var(--space-6);
+  margin-top: var(--space-7);
 }
 
 @media (min-width: 30em) {
@@ -370,44 +369,174 @@ header {
 }
 
 /* --------------------------------------------------------------------------
+   8b. Vehicle photo (Home only) — the full, unstretched, uncropped source
+   photo as a real <img> rather than a CSS background. Purple fills the
+   space beside the portrait-oriented photo at wide widths. The About TTM
+   copy lives inside .vehicle-photo__frame, overlaid on the photo itself
+   rather than as a separate section below it.
+   -------------------------------------------------------------------------- */
+.vehicle-photo {
+  background-color: var(--color-purple);
+  text-align: center;
+}
+
+/* Shrink-wraps to the <img>'s own rendered size (not the full section
+   width), so .vehicle-photo__overlay's absolute positioning below is
+   anchored to the photo's actual edges, not the purple space around it. */
+.vehicle-photo__frame {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.vehicle-photo__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Mobile-first: below 36em the overlay is a normal block stacked under
+   the photo (not covering it) — two paragraphs of body copy would be too
+   tall to overlay readably on a narrow portrait image at small sizes. */
+/* No solid background here — readability over the photo comes from the
+   text-shadow (always on) plus the soft gradient added below at 36em+,
+   not a flat rectangle. */
+.vehicle-photo__overlay {
+  color: var(--color-white);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.6);
+  padding: var(--space-4) var(--space-5);
+  text-align: center;
+}
+
+.vehicle-photo__overlay h2 {
+  color: var(--color-yellow);
+  font-size: clamp(1.375rem, 2.2vw + 1.1rem, 2rem);
+  margin-bottom: var(--space-2);
+}
+
+.vehicle-photo__overlay p {
+  font-size: 1.3rem;
+  line-height: 1.65;
+  margin-bottom: var(--space-2);
+}
+
+.vehicle-photo__overlay p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tablet and up: enough room for the overlay to sit on top of the lower
+   portion of the photo instead of stacking below it. Width capped at
+   47rem (up from 43rem) so it reads as a caption panel over the truck,
+   not a full photo cover. The gradient fades to fully transparent by the
+   top of the box — soft wash, not a hard-edged rectangle — and only
+   covers the lower portion of the image, per spec. */
+@media (min-width: 36em) {
+  .vehicle-photo__overlay {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-4);
+    transform: translateX(-50%);
+    width: min(94%, 47rem);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0) 100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
    9. Services — tire-shaped elements
    -------------------------------------------------------------------------- */
 #services {
-  background-color: transparent;
+  text-align: center;
 }
 
-/* Same breakpoint pattern as the rest of the site: 1 -> 2 -> 4 columns. */
+/* Yellow rectangle behind the page heading — id-scoped to this page's
+   own heading (same id on both en/es services.html), so this styling
+   is shared automatically without touching either HTML file. Sharp
+   corners deliberately (border-radius: 0), unlike the site's other
+   rounded elements. */
+#services-heading {
+  display: inline-block;
+  background-color: var(--color-yellow);
+  color: var(--color-text-dark);
+  border-radius: 0;
+  padding: var(--space-3) var(--space-6);
+}
+
+/* Flexbox, not Grid: Grid's auto-placement can't center an incomplete
+   last row (it would sit flush-left instead). This page currently has
+   an even 8 tires (4 + 4), but Flexbox's justify-content keeps every
+   wrapped row centered regardless — robust if a service is ever added
+   or removed and the count becomes uneven again. This is a deliberate,
+   page-specific divergence from the Grid pattern used for the Our Work
+   gallery below. */
 .tire-grid {
   list-style: none;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-6);
+  max-width: 85rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-@media (min-width: 37.5em) {
-  .tire-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Each grid item: a column pairing the tire circle with its label
+   underneath. This element (not the circle itself) is the flex item, so
+   the label's height never affects the circle's own sizing/aspect-ratio.
+   Flex-basis is set per breakpoint below, capped by max-width so tires
+   don't grow unbounded on very wide screens, and floored by min-width so
+   they never shrink past legibility. Each breakpoint's flex-basis
+   subtracts a full gap (not gap * (n-1)/n) — a deliberate safety margin
+   so subpixel rounding or scrollbar width never pushes a row from 4 items
+   down to 3. .tire-grid's own max-width (above) is set wider than the
+   page's normal content width specifically so these tires have room to
+   reach their full size on wide desktop screens instead of being capped
+   early. */
+.tire-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: 100%;
+  min-width: 9rem;
+  max-width: 20rem;
+}
+
+/* Mobile: one column smallest, two once there's room. */
+@media (min-width: 30em) {
+  .tire-item {
+    flex-basis: calc(50% - var(--space-6));
   }
 }
 
+/* Tablet: three columns. */
+@media (min-width: 48em) {
+  .tire-item {
+    flex-basis: calc(33.333% - var(--space-6));
+  }
+}
+
+/* Desktop: four columns — with 8 tires this gives an even 4 on row
+   one and 4 on row two, per the flex-wrap centering above. */
 @media (min-width: 60em) {
-  .tire-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .tire-item {
+    flex-basis: calc(25% - var(--space-6));
   }
 }
 
-/* Outer "tire": a circle with a tread pattern built from a conic gradient,
-   so no images or brand-specific tread/logo artwork are needed. Sized
-   fluidly (percentage width + aspect-ratio) so it never distorts and
-   scales with its grid cell rather than using a fixed pixel size. */
+/* The tire circle itself: a tread pattern built from a conic gradient, so
+   no images or brand-specific tread/logo artwork are needed. It fills the
+   full width of its .tire-item, so its size always matches the flex-basis
+   set above. Deliberately left visually simple for now — this is where a
+   service photo or icon will go in a future step, replacing the plain
+   yellow hub below. */
 .tire {
   width: 100%;
-  max-width: 11rem;
-  min-width: 6.5rem;
   aspect-ratio: 1 / 1;
-  margin: 0 auto;
   border-radius: 50%;
-  padding: 12%;
   background: repeating-conic-gradient(
     var(--color-text-dark) 0deg 8deg,
     #000 8deg 16deg
@@ -418,26 +547,67 @@ header {
   box-shadow: var(--shadow);
 }
 
-/* Inner "hub": solid accent circle that holds the actual service name. */
+/* Inner "hub": plain accent circle, sized as a share of .tire's own
+   content box. Empty for now (no text or padding needed) — reserved as
+   the future placement for a service photo or icon. This sizing only
+   works because .tire carries no percentage-based padding of its own —
+   percentage padding always resolves against the width of the
+   *containing block* (.tire-grid), never the padded element's own
+   diameter, which is what previously collapsed this content box to near
+   zero on wide viewports. */
 .tire__hub {
-  width: 62%;
-  height: 62%;
+  width: 72%;
+  height: 72%;
   border-radius: 50%;
   background-color: var(--color-yellow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-2);
+  background-size: cover;
+  background-position: center;
 }
 
+/* Service photos: one modifier class per tire, added directly in the
+   markup on the .tire__hub span. border-radius above clips each photo
+   to the circle automatically. All 8 tires now have a photo modifier. */
+.tire__hub--new-used-tires {
+  background-image: url("../assets/images/service-new-used-tires.jpg");
+}
+.tire__hub--flat-tire-repair {
+  background-image: url("../assets/images/service-flat-tire-repair.jpg");
+}
+.tire__hub--tire-installation {
+  background-image: url("../assets/images/service-tire-installation.jpg");
+}
+.tire__hub--brake-replacement {
+  background-image: url("../assets/images/service-brake-replacement.jpg");
+}
+.tire__hub--shocks-struts {
+  background-image: url("../assets/images/service-shocks-struts.jpg");
+}
+.tire__hub--suspension-service {
+  background-image: url("../assets/images/service-suspension-service.jpg");
+}
+.tire__hub--wheel-balancing {
+  background-image: url("../assets/images/service-wheel-balancing.jpg");
+}
+.tire__hub--tire-rotation {
+  background-image: url("../assets/images/service-tire-rotation.jpg");
+}
+
+/* Label now sits below the tire circle, on the page's purple background
+   directly, so it inherits the purple page's white text color rather
+   than the dark color it needed when it lived inside the yellow hub.
+   hyphens is intentionally NOT used here — dictionary-based mid-word
+   hyphenation is what produced breaks like "instal-lation". All service
+   names are multi-word phrases that wrap cleanly at spaces once tires
+   are this large; overflow-wrap stays only as a safety net (it breaks
+   without inserting a hyphen character, and only if truly unavoidable). */
 .tire__label {
-  font-size: clamp(0.7rem, 2.5vw, 0.95rem);
+  margin-top: var(--space-4);
+  font-size: clamp(1rem, 1.6vw + 0.6rem, 1.5rem);
   font-weight: 700;
-  color: var(--color-text-dark);
+  color: var(--color-white);
   text-align: center;
-  line-height: 1.15;
+  line-height: 1.2;
   overflow-wrap: break-word;
-  hyphens: auto;
 }
 
 /* Mobile fallback: below this width the tread pattern reads as noise
@@ -449,14 +619,54 @@ header {
   }
 }
 
+/* 9b. Services call-to-action — a compact phone prompt below the tire
+   grid, deliberately not the full Contact card (Contact has its own
+   dedicated page). text-align:center handles the button (an inline-flex
+   element); the two <p> elements are centered by the existing
+   `section > *` margin-auto rule, same split used on #hero. */
+.services-cta {
+  text-align: center;
+}
+
+.services-cta__question {
+  font-size: clamp(1.25rem, 2vw + 1rem, 1.75rem);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.services-cta__phone {
+  margin-bottom: var(--space-5);
+}
+
+.services-cta__phone a {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* .button--primary is purple-on-white by default, which would nearly
+   disappear against this page's purple background — inverted to
+   white-on-purple here for contrast, hovering to the brand yellow. */
+.services-cta .button--primary {
+  background-color: var(--color-white);
+  color: var(--color-purple);
+}
+
+.services-cta .button--primary:hover,
+.services-cta .button--primary:focus-visible {
+  background-color: var(--color-yellow);
+  color: var(--color-text-dark);
+}
+
 /* --------------------------------------------------------------------------
    10. Our Work & Contact
    -------------------------------------------------------------------------- */
 #our-work {
-  background-color: var(--color-bg-light);
   text-align: center;
 }
 
+/* Exactly 12 photos divides evenly into every column count below, so
+   (unlike the 7-tire Services layout) standard Grid auto-placement has
+   no incomplete-row centering problem — no Flexbox trick needed here. */
 .work-gallery {
   list-style: none;
   display: grid;
@@ -464,36 +674,38 @@ header {
   gap: var(--space-5);
 }
 
-@media (min-width: 37.5em) {
+@media (min-width: 30em) {
   .work-gallery {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 60em) {
+@media (min-width: 50em) {
   .work-gallery {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Fixed aspect ratio + cover crop keeps mixed portrait/landscape source
-   photos (some client photos are tall phone photos) presenting as
-   consistent, non-distorted grid tiles. */
+@media (min-width: 60em) {
+  .work-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Square cards, as requested. object-fit: cover crops without
+   stretching regardless of each source photo's original proportions. */
 .work-gallery img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 
 #contact {
-  background-color: transparent;
   text-align: center;
 }
 
-/* Semi-opaque card so contact text stays readable once the page
-   background photo is in place behind this section. */
 .contact-card {
   background-color: rgba(255, 255, 255, 0.92);
   border-radius: var(--radius);
@@ -503,8 +715,13 @@ header {
   margin: 0 auto;
 }
 
+.contact-card p {
+  font-size: 1.125rem;
+}
+
 .contact-card address {
   font-style: normal;
+  font-size: 1.25rem;
   line-height: 1.5;
   margin-top: var(--space-3);
 }
@@ -520,12 +737,48 @@ header {
   text-decoration: none;
   border-radius: var(--radius);
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1.375rem;
 }
 
 #contact a:hover,
 #contact a:focus-visible {
   background-color: var(--color-text-dark);
+}
+
+/* Responsive map embed: aspect-ratio keeps the iframe scaling cleanly
+   at every width without a fixed pixel height. */
+.map-embed {
+  width: 100%;
+  max-width: 40rem;
+  aspect-ratio: 4 / 3;
+  margin: var(--space-6) auto 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.map-directions-link {
+  margin-top: var(--space-4);
+}
+
+/* TikTok/Instagram: real links now that URLs are confirmed. Sized/styled
+   as buttons via the existing #contact a rule above (44px min touch
+   target, purple background), same as the phone/email/directions links —
+   no separate button styling needed here, just layout. */
+.social-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-top: var(--space-5);
 }
 
 /* --------------------------------------------------------------------------
@@ -541,6 +794,22 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+.footer-credit {
+  margin-top: var(--space-2);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer-credit a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  text-decoration: underline;
 }
 
 /* --------------------------------------------------------------------------
