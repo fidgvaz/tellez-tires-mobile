@@ -90,3 +90,67 @@ ttm-tellez-tires-mobile/
 │   └── main.js
 ├── README.md
 └── .gitignore
+```
+
+## Current Status
+
+The main website structure and design are complete. So far, I have finished:
+
+- Four English pages and four matching Spanish pages
+- Responsive layouts for phones, tablets, and desktop computers
+- Mobile navigation
+- Accessibility improvements
+- The Home page hero image
+- The Our Work photo gallery
+- Contact information and click-to-call links
+- The Google Maps location
+- Version control with Git and GitHub
+
+A few details still need to be confirmed by the business owner before the website is ready for deployment:
+
+- Business hours
+- TikTok and Instagram profile links
+- Final approved logo
+- Final wording for the services
+- Approval of the selected gallery photos
+- Final developer credit
+- Choice of hosting provider
+
+## Business Information
+
+- **Business:** TTM — Téllez Tires Mobile
+- **Location:** 6980 Monterey Road, Gilroy, California 95020
+- **Phone:** (408) 841-2040
+- **Email:** enrique408delgadillo@gmail.com
+
+The photographs and logo used in this project were provided or authorized by the business. They are not available for reuse without permission.
+
+## Testing
+
+I tested the website on mobile, tablet, and desktop screen sizes. I also checked:
+
+- English and Spanish navigation
+- Keyboard navigation
+- Mobile-menu behavior
+- The website with JavaScript disabled
+- Image loading
+- Phone and email links
+- Responsive gallery behavior
+- Horizontal scrolling
+- Reduced-motion preferences
+
+I will repeat the final tests after the business owner approves the remaining information and before the website is published.
+
+## Deployment
+
+The business owner has not chosen a hosting provider yet. The website will be deployed to either Hostinger or GoDaddy after the customer decides which service is the better fit.
+
+Before deployment, I will confirm the remaining business information, test all eight pages again, and create a final production commit.
+
+Some small adjustments may still be needed after the website goes live. For example, the customer may notice missing information, request a wording change, or want something adjusted after seeing the website online.
+
+## Repository
+
+I use this GitHub repository to keep the project organized, preserve its development history, prepare future updates, and present the work as part of my portfolio.
+
+As the project continues, I will commit each meaningful and tested update before pushing it to GitHub.
